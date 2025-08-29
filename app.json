@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Ricettario",
+    "name": "FreshBox",
     "slug": "Ricettario",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -9,11 +9,12 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "icon": "./assets/icons/fridge.png"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/icons/fridge.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true
