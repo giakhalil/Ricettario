@@ -1,11 +1,13 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { SafeAreaView, Text } from 'react-native';
 
 const Saved = () => {
   return (
-    <View>
-      <Text>Preferiti</Text>
-    </View>
+    <SafeAreaView>
+      <Text style={{ fontSize: 24, textAlign: 'center', marginTop: 20 }}>
+              Preferiti
+            </Text>
+    </SafeAreaView>
   );
 }
 

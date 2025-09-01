@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 export default function Index() {
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -26,3 +25,4 @@ const styles = StyleSheet.create({
     color: '#374151',
   },
 });
+
