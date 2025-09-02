@@ -46,7 +46,7 @@ export default function SignIn() {
       />
       
       <TouchableOpacity
-        style={{ backgroundColor: 'blue', padding: 15, borderRadius: 5 }}
+        style={{ backgroundColor: '#386641', padding: 15, borderRadius: 5 }}
         onPress={handleSignIn}
       >
         <Text style={{ color: 'white', textAlign: 'center' }}>Accedi</Text>
@@ -56,7 +56,7 @@ export default function SignIn() {
         style={{ padding: 15 }}
         onPress={() => router.push('/sign-up')}
       >
-        <Text style={{ color: 'blue', textAlign: 'center' }}>Non hai un account? Registrati</Text>
+        <Text style={{ color: '#386641', textAlign: 'center' }}>Non hai un account? Registrati</Text>
       </TouchableOpacity>
     </View>
   );
