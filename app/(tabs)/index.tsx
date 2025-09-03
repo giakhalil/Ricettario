@@ -1,5 +1,5 @@
-import { useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
+import { useFocusEffect, useRouter } from "expo-router";
+import React, { useCallback, useState } from "react";
 import { FlatList, SafeAreaView, StyleSheet, Text } from "react-native";
 import AddButton from "../../components/AddButton";
 import { getRecipes, Recipe } from "../../utils/recipeStorage";
@@ -9,15 +9,19 @@ const Home = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const load = async () => {
-      setLoading(true);
-      const stored = await getRecipes();
-      setRecipes(stored);
-      setLoading(false);
-    };
-    load();
+const loadRecipes = useCallback(async () => {
+    setLoading(true);
+    const stored = await getRecipes();
+    setRecipes(stored);
+    setLoading(false);
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadRecipes();
+    }, [loadRecipes]) 
+  );
+
 
   return (
     <SafeAreaView style={styles.container}>

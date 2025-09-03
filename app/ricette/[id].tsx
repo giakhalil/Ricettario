@@ -2,6 +2,7 @@ import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import DeleteButton from "../../components/DeleteButton";
 import { getRecipeById, Recipe } from "../../utils/recipeStorage";
 
 const RecipeDetail = () => {
@@ -43,6 +44,7 @@ const RecipeDetail = () => {
       <Text style={styles.text}>{recipe.ingredients}</Text>
       <Text style={styles.subtitle}>Istruzioni:</Text>
       <Text style={styles.text}>{recipe.instructions}</Text>
+      <DeleteButton recipeId={recipe.id} recipeTitle={recipe.title} />
     </SafeAreaView>
   );
 };
@@ -70,4 +72,5 @@ const styles = StyleSheet.create({
 });
 
 export default RecipeDetail;
+
 

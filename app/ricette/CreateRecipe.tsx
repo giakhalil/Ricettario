@@ -1,6 +1,7 @@
-import { useRouter } from "expo-router";
-import React, { useState } from "react";
-import { ActivityIndicator, Alert, Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { useNavigation, useRouter } from "expo-router";
+import React, { useLayoutEffect, useState } from "react";
+import { ActivityIndicator, Alert, Button, StyleSheet, Text, TextInput } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { saveRecipe } from "../../utils/recipeStorage";
 
 const CreateRecipe = () => {
@@ -9,6 +10,13 @@ const CreateRecipe = () => {
   const [instructions, setInstructions] = useState("");
   const [saving, setSaving] = useState(false);
   const router = useRouter();
+  const navigation = useNavigation();
+
+useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false
+    });
+  }, [navigation]);
 
   const handleSave = async () => {
     if (!title.trim()) {
@@ -29,7 +37,7 @@ const CreateRecipe = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Crea una nuova ricetta</Text>
 
       <TextInput
@@ -58,7 +66,7 @@ const CreateRecipe = () => {
       ) : (
         <Button title="Salva" onPress={handleSave} />
       )}
-    </View>
+ </SafeAreaView>
   );
 };
 

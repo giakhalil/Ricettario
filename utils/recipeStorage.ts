@@ -46,12 +46,12 @@ export const getRecipeById = async (id: string): Promise<Recipe | null> => {
 
 export const deleteRecipe = async (id: string): Promise<boolean> => {
   try {
-    const recipes = await getRecipes();
-    const filtered = recipes.filter((r) => r.id !== id);
-    await AsyncStorage.setItem(RECIPES_KEY, JSON.stringify(filtered));
+    const storedRecipes = await getRecipes();
+    const updatedRecipes = storedRecipes.filter(recipe => recipe.id !== id);
+    await AsyncStorage.setItem(RECIPES_KEY, JSON.stringify(updatedRecipes));
     return true;
   } catch (error) {
-    console.error("Error deleting recipe:", error);
+    console.error("Errore eliminazione ricetta:", error);
     return false;
   }
 };

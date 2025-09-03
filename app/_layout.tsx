@@ -6,7 +6,7 @@ export default function RootLayout() {
       <Stack.Screen
         name="sign-in"
         options={{ 
-          headerShown: false  // Nasconde l'header
+          headerShown: false  
         }}
       />
       <Stack.Screen
