@@ -2,6 +2,7 @@ import { useFocusEffect, useNavigation, useRouter } from "expo-router";
 import React, { useCallback, useLayoutEffect, useState } from "react";
 import { FlatList, SafeAreaView, StyleSheet, Text } from "react-native";
 import AddButton from "../../components/AddButton";
+import EditButton from "../../components/EditButton";
 import { getRecipes, Recipe } from "../../utils/recipeStorage";
 
 
@@ -42,12 +43,15 @@ const loadRecipes = useCallback(async () => {
           data={recipes}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
+            <SafeAreaView style={styles.riga}>
             <Text
               style={styles.recipe}
               onPress={() => router.push(`/ricette/${item.id}`)}
             >
               🍴 {item.title}
             </Text>
+            <EditButton recipeId={item.id} />
+            </SafeAreaView>
           )}
           ListEmptyComponent={<Text>Nessuna ricetta ancora</Text>}
         />
@@ -75,6 +79,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#eee",
   },
+  riga: {
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
+  borderBottomWidth: 1,
+  borderBottomColor: "#eee",
+  paddingVertical: 8,
+},
 });
 
 export default Home;

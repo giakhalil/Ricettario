@@ -1,28 +1,33 @@
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { Alert, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { getUser } from './../utils/storage';
+import { getUser, setCurrentUser } from './../utils/storage';
 
 export default function SignIn() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
 
-  const handleSignIn = async () => {
-    if (!username || !password) {
-      Alert.alert('Errore', 'Inserisci username e password');
-      return;
-    }
+const handleSignIn = async () => {
+  if (!username || !password) {
+    Alert.alert('Errore', 'Inserisci username e password');
+    return;
+  }
 
     const user = await getUser(username);
-    
-    if (user && user.password === password) {
-      Alert.alert('Successo', 'Login effettuato!');
-      router.replace('/(tabs)');
-    } else {
-      Alert.alert('Errore', 'Credenziali non valide');
+
+    if(user) {
+      Alert.alert('trovato!')
     }
-  };
+    
+  if (user && user.password === password) {
+    await setCurrentUser(username); // Salva l'utente corrente
+    Alert.alert('Successo', 'Login effettuato!');
+    router.replace('/(tabs)');
+  } else {
+    Alert.alert('Errore', 'Credenziali non valide');
+  }
+};
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', padding: 20 }}>
