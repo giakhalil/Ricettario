@@ -2,13 +2,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-    ActivityIndicator,
-    Alert,
-    Button,
-    StyleSheet,
-    Text,
-    TextInput,
-    View,
+  ActivityIndicator,
+  Alert,
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
 } from "react-native";
 import { getRecipeById, getRecipes, Recipe } from "../../utils/recipeStorage";
 
@@ -92,13 +92,13 @@ const EditRecipe = () => {
         placeholder="Inserisci ingredienti"
       />
 
-      <Text style={styles.label}>Istruzioni</Text>
+      <Text style={styles.label}>Preparazione</Text>
       <TextInput
         style={[styles.input, { height: 120 }]}
         value={instructions}
         onChangeText={setInstructions}
         multiline
-        placeholder="Inserisci istruzioni"
+        placeholder="Inserisci preparazione"
       />
 
       <Button title="💾 Salva modifiche" onPress={handleSave} color="#2196F3" />

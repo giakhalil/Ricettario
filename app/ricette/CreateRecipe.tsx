@@ -55,7 +55,7 @@ useLayoutEffect(() => {
       />
       <TextInput
         style={[styles.input, styles.multiline]}
-        placeholder="Istruzioni"
+        placeholder="Preparazione"
         value={instructions}
         onChangeText={setInstructions}
         multiline

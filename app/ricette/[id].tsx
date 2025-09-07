@@ -42,7 +42,7 @@ const RecipeDetail = () => {
       <Text style={styles.title}>{recipe.title}</Text>
       <Text style={styles.subtitle}>Ingredienti:</Text>
       <Text style={styles.text}>{recipe.ingredients}</Text>
-      <Text style={styles.subtitle}>Istruzioni:</Text>
+      <Text style={styles.subtitle}>Preparazione:</Text>
       <Text style={styles.text}>{recipe.instructions}</Text>
       <DeleteButton recipeId={recipe.id} recipeTitle={recipe.title} />
     </SafeAreaView>
