@@ -21,7 +21,7 @@ const handleSignIn = async () => {
     }
     
   if (user && user.password === password) {
-    await setCurrentUser(username); // Salva l'utente corrente
+    await setCurrentUser(username); 
     Alert.alert('Successo', 'Login effettuato!');
     router.replace('/(tabs)');
   } else {

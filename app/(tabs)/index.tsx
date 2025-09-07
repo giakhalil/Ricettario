@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 import React from "react";
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const Iniziale = () => {
   const router = useRouter();
@@ -10,12 +10,21 @@ const Iniziale = () => {
       <Text style={styles.title}>Benvenuto 👋</Text>
       <Text style={styles.subtitle}>Gestisci le tue ricette facilmente</Text>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => router.push("/ricette/recipes")}
-      >
-        <Text style={styles.buttonText}>Vai alle Ricette</Text>
-      </TouchableOpacity>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => router.push("/ricette/recipes")}
+        >
+          <Text style={styles.buttonText}>🍴 Vai alle Ricette</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: "#386641" }]} 
+          onPress={() => router.push("/shoppingList")}
+        >
+          <Text style={styles.buttonText}>🛒 Lista della Spesa</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
@@ -39,11 +48,18 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     textAlign: "center",
   },
+  buttonContainer: {
+    width: '100%',
+    alignItems: 'center',
+    gap: 15,
+  },
   button: {
     backgroundColor: "#64994E",
-    paddingHorizontal: 20,
-    paddingVertical: 12,
+    paddingHorizontal: 25,
+    paddingVertical: 15,
     borderRadius: 10,
+    width: '80%',
+    alignItems: 'center',
   },
   buttonText: {
     color: "#fff",

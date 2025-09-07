@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const USERS_KEY = '@users';
-const CURRENT_USER_KEY = '@currentUser'; // Aggiungi questa costante
+const CURRENT_USER_KEY = '@currentUser'; 
 
 export interface User {
   username: string;

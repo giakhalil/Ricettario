@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import DeleteButton from "../../components/DeleteButton";
 import { getRecipeById, Recipe } from "../../utils/recipeStorage";
 
+
 const RecipeDetail = () => {
   const { id } = useLocalSearchParams();
   const [recipe, setRecipe] = useState<Recipe | null>(null);

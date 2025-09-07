@@ -1,10 +1,10 @@
 import { useFocusEffect, useNavigation, useRouter } from "expo-router";
 import React, { useCallback, useLayoutEffect, useState } from "react";
-import { FlatList, SafeAreaView, StyleSheet, Text, TextInput, } from "react-native";
+import { FlatList, SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
 import AddButton from "../../components/AddButton";
 import EditButton from "../../components/EditButton";
+import FavoriteButton from "../../components/FavoriteButton";
 import { getRecipes, Recipe } from "../../utils/recipeStorage";
-
 
 const Home = () => {
   const router = useRouter();
@@ -14,21 +14,20 @@ const Home = () => {
   const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
   const [searchText, setSearchText] = useState("");
   
-    useLayoutEffect(() => {
-      navigation.setOptions({
-        headerShown: false
-      });
-    }, [navigation]);
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false
+    });
+  }, [navigation]);
 
-const loadRecipes = useCallback(async () => {
+  const loadRecipes = useCallback(async () => {
     setLoading(true);
     const stored = await getRecipes();
     setRecipes(stored);
-    setLoading(false);
     setFilteredRecipes(stored);
+    setLoading(false);
   }, []);
 
-  
   const handleSearch = (text: string) => {
     setSearchText(text);
     if (text === "") {
@@ -48,19 +47,18 @@ const loadRecipes = useCallback(async () => {
     }, [loadRecipes]) 
   );
 
-
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Le tue ricette</Text>
 
-      <SafeAreaView style={styles.searchContainer}>
+      <View style={styles.searchContainer}>
         <TextInput
           style={styles.searchInput}
           placeholder="Cerca ricette o ingredienti..."
           value={searchText}
           onChangeText={handleSearch}
         />
-      </SafeAreaView>
+      </View>
 
       {loading ? (
         <Text>Caricamento...</Text>
@@ -69,15 +67,18 @@ const loadRecipes = useCallback(async () => {
           data={filteredRecipes}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <SafeAreaView style={styles.riga}>
+            <View style={styles.recipeRow}>
               <Text
                 style={styles.recipe}
                 onPress={() => router.push(`/ricette/${item.id}`)}
               >
                 🍴 {item.title}
               </Text>
-              <EditButton recipeId={item.id} />
-            </SafeAreaView>
+              <View style={styles.buttonContainer}>
+                <FavoriteButton recipeId={item.id} />
+                <EditButton recipeId={item.id} />
+              </View>
+            </View>
           )}
           ListEmptyComponent={
             <Text style={styles.emptyText}>
@@ -102,6 +103,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "bold",
     marginBottom: 16,
+    textAlign: "center",
   },
   searchContainer: {
     marginBottom: 16,
@@ -114,18 +116,23 @@ const styles = StyleSheet.create({
     fontSize: 16,
     backgroundColor: "#f9f9f9",
   },
-  recipe: {
-    fontSize: 18,
-    paddingVertical: 8,
-    flex: 1,
-  },
-  riga: {
+  recipeRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     borderBottomWidth: 1,
     borderBottomColor: "#eee",
-    paddingVertical: 8,
+    paddingVertical: 12,
+  },
+  recipe: {
+    fontSize: 18,
+    flex: 1,
+    marginRight: 10,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8, 
   },
   emptyText: {
     textAlign: "center",
@@ -136,5 +143,6 @@ const styles = StyleSheet.create({
 });
 
 export default Home;
+
 
 

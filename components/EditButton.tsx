@@ -1,4 +1,3 @@
-// components/EditButtonInline.tsx
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React from "react";
