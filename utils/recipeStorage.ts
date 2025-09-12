@@ -7,6 +7,10 @@ export interface Recipe {
   title: string;
   ingredients: string;
   instructions: string;
+  cookingTime?: string;
+  image?: string;
+  quantities?: string;
+  notes?: string;
 }
 
 export const saveRecipe = async (

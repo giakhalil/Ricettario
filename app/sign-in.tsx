@@ -15,10 +15,6 @@ const handleSignIn = async () => {
   }
 
     const user = await getUser(username);
-
-    if(user) {
-      Alert.alert('trovato!')
-    }
     
   if (user && user.password === password) {
     await setCurrentUser(username); 
