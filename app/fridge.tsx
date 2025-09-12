@@ -42,9 +42,26 @@ const Fridge = () => {
   };
 
   const handleDeleteItem = async (id: string) => {
-    await deleteFridgeItem(id);
-    loadFridgeItems();
-  };
+  
+  Alert.alert(
+    "Elimina ingrediente",
+    `Sei sicuro di voler eliminare l'ingrediente dal frigo?`,
+    [
+      {
+        text: "Annulla",
+        style: "cancel"
+      },
+      {
+        text: "Elimina",
+        style: "destructive",
+        onPress: async () => {
+          await deleteFridgeItem(id);
+          loadFridgeItems();
+        }
+      }
+    ]
+  );
+};
 
   const toggleItemSelection = (id: string) => {
     setSelectedItems(prev => 
