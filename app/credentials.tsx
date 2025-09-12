@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Alert, Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { useNavigation } from "expo-router";
+import { useEffect, useLayoutEffect, useState } from "react";
+import { Alert, Button, SafeAreaView, StyleSheet, Text, TextInput } from "react-native";
 import { getCurrentUser, getUser, updateUserPassword } from "../utils/storage";
 
 export default function Credentials() {
@@ -8,6 +9,7 @@ export default function Credentials() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigation = useNavigation();
 
  useEffect(() => {
     const loadUser = async () => {
@@ -19,6 +21,11 @@ export default function Credentials() {
     loadUser();
   }, []);
 
+  useLayoutEffect(() => {
+      navigation.setOptions({
+        headerShown: false
+      });
+    }, [navigation]);
 
    const handleChangePassword = async () => {
     if (!oldPassword || !newPassword || !confirmPassword) {
@@ -66,7 +73,7 @@ export default function Credentials() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Credenziali Utente</Text>
       {username ? (
         <Text style={styles.label}>Username: {username}</Text>
@@ -102,7 +109,7 @@ export default function Credentials() {
         onPress={handleChangePassword}
         disabled={loading}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 

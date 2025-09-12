@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getFridgeItems } from './FridgeStorage';
 
 const SHOPPING_LIST_KEY = "@shoppingList";
 
@@ -70,5 +71,20 @@ export const clearCompletedItems = async (): Promise<boolean> => {
   } catch (error) {
     console.error("Error clearing completed items:", error);
     return false;
+  }
+};
+
+export const getFilteredShoppingList = async (): Promise<ShoppingListItem[]> => {
+  try {
+    const shoppingList = await getShoppingList();
+    const fridgeItems = await getFridgeItems();
+    const fridgeItemNames = fridgeItems.map(item => item.name.toLowerCase());
+    
+    return shoppingList.filter(item => 
+      !fridgeItemNames.includes(item.name.toLowerCase())
+    );
+  } catch (error) {
+    console.error("Error getting filtered shopping list:", error);
+    return [];
   }
 };

@@ -1,16 +1,16 @@
 import { useNavigation } from "expo-router";
 import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { FlatList, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { deleteShoppingListItem, getShoppingList, saveShoppingListItem, ShoppingListItem, toggleShoppingListItem } from '../utils/ShopppingListStorage';
+import { deleteShoppingListItem, getFilteredShoppingList, saveShoppingListItem, ShoppingListItem, toggleShoppingListItem } from '../utils/ShopppingListStorage';
 const ShoppingList = () => {
   const [shoppingList, setShoppingList] = useState<ShoppingListItem[]>([]);
   const [newItem, setNewItem] = useState('');
   const navigation = useNavigation();
 
-  const loadShoppingList = useCallback(async () => {
-    const items = await getShoppingList();
-    setShoppingList(items);
-  }, []);
+ const loadShoppingList = useCallback(async () => {
+  const items = await getFilteredShoppingList(); 
+  setShoppingList(items);
+}, []);
 
   useEffect(() => {
     loadShoppingList();

@@ -24,6 +24,13 @@ const Iniziale = () => {
         >
           <Text style={styles.buttonText}>🛒 Lista della Spesa</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: "#4CAF50" }]}
+          onPress={() => router.push("../fridge")}
+        >
+          <Text style={styles.buttonText}> ❄️ Il Mio Frigo</Text>
+      </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
