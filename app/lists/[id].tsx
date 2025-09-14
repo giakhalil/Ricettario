@@ -1,5 +1,5 @@
-import { router, useLocalSearchParams, } from "expo-router";
-import React, { useEffect, useState } from "react";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { getListById, RecipeList } from "../../utils/ListeStorage";
 import { getRecipeById, Recipe } from "../../utils/recipeStorage";
@@ -9,7 +9,14 @@ const ListDetail = () => {
   const [list, setList] = useState<RecipeList | null>(null);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
+  const navigation = useNavigation();
 
+   useLayoutEffect(() => {
+      navigation.setOptions({
+        headerShown: false
+      });
+    }, [navigation]);
+    
   useEffect(() => {
     const loadListData = async () => {
       if (id) {
@@ -59,7 +66,7 @@ const ListDetail = () => {
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.recipeItem}
-            onPress={() => router.push(`/ricette/liste/${item.id}`)}
+            onPress={() => router.push(`/ricette/${item.id}`)}
           >
             <Text style={styles.recipeName}>{item.title}</Text>
             <Text style={styles.recipeArrow}>→</Text>

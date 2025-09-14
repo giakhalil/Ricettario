@@ -102,7 +102,7 @@ const Lists = () => {
           <View style={styles.listItem}>
             <TouchableOpacity 
               style={styles.listContent}
-              onPress={() => router.push(`../liste/${item.id}`)}
+              onPress={() => router.push(`/lists/${item.id}`)}
             >
               <Text style={styles.listName}>{item.name}</Text>
               <Text style={styles.recipeCount}>
