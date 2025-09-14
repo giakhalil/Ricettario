@@ -1,5 +1,5 @@
 import { useNavigation } from "expo-router";
-import { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Alert, Button, SafeAreaView, StyleSheet, Text, TextInput } from "react-native";
 import { getCurrentUser, getUser, updateUserPassword } from "../utils/storage";
 
