@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "FreshBox",
+    "name": "ChillMate",
     "slug": "Ricettario",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "",
     "scheme": "ricettario",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,

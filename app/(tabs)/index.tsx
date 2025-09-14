@@ -1,12 +1,18 @@
 import { useRouter } from "expo-router";
 import React from "react";
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const Iniziale = () => {
   const router = useRouter();
 
   return (
+    
     <SafeAreaView style={styles.container}>
+      <Image
+      source={require('@/assets/icons/logo.png')}
+      style={styles.image}
+      resizeMode="contain"
+      />
       <Text style={styles.title}>Benvenuto 👋</Text>
       <Text style={styles.subtitle}>Gestisci le tue ricette facilmente</Text>
 
@@ -80,6 +86,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
   },
+   image: {
+    width: 400,
+    height: 200,
+    marginBottom: 20,
+   }
 });
 
 export default Iniziale;
