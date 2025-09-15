@@ -47,7 +47,7 @@ const Iniziale = () => {
               style={styles.image}
               resizeMode="contain"
             />
-            <Text style={styles.buttonText}>Che mangiamo?</Text>
+            <Text style={styles.buttonText}>Che Mangiamo?</Text>
           </View>
         </TouchableOpacity>
 
@@ -61,7 +61,7 @@ const Iniziale = () => {
               style={styles.image}
               resizeMode="contain"
             />
-            <Text style={styles.buttonText}>Lista della spesa</Text>
+            <Text style={styles.buttonText}>Lista Della Spesa</Text>
           </View>
         </TouchableOpacity>
 
@@ -75,7 +75,7 @@ const Iniziale = () => {
               style={styles.image}
               resizeMode="contain"
             />
-            <Text style={styles.buttonText}>Cosa Ho in Frigo?</Text>
+            <Text style={styles.buttonText}>Cosa Ho In Frigo?</Text>
           </View>
         
       </TouchableOpacity>

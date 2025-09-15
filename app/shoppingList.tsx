@@ -47,7 +47,6 @@ const ShoppingList = () => {
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Lista della Spesa 🛒</Text>
 
-      {/* Aggiungi item manualmente */}
       <View style={styles.addContainer}>
         <TextInput
           style={styles.input}
@@ -61,7 +60,6 @@ const ShoppingList = () => {
         </TouchableOpacity>
       </View>
 
-      {/* Lista della spesa */}
       <FlatList
         data={shoppingList}
         keyExtractor={(item) => item.id}

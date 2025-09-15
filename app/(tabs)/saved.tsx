@@ -1,6 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useCallback, useState } from 'react';
-import { FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { getFavorites } from '../../utils/FavoriteStorage';
 import { getRecipes, Recipe } from '../../utils/recipeStorage';
 import { saveShoppingListItem } from '../../utils/ShopppingListStorage';
@@ -55,8 +55,17 @@ const Saved = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Ricette Preferite ❤️</Text>
-
+      <View style={styles.header}>
+        <View style={styles.ImageContainer}>
+          <Image
+            source={require('@/assets/icons/prossimo.png')}
+            style={styles.image}
+            resizeMode="contain"
+          />
+         <Text style={styles.title}>Prossimamente In Tavola</Text>
+        </View>
+      </View>
+      
       <FlatList
         data={favoriteRecipes}
         keyExtractor={(item) => item.id}
@@ -90,18 +99,32 @@ const Saved = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: '#fff',
   },
+   header: {
+    padding: 15,
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e9ecef',
+    alignItems: 'center',
+  },
+  ImageContainer: {
+    alignItems: 'center',
+  },
+  image: {
+    width: 200,
+    height: 200,
+    marginBottom: 10,
+  },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 20,
     textAlign: 'center',
     color: '#386641',
+    marginTop: -40,
   },
   recipeContainer: {
-    marginBottom: 20,
+    marginBottom: 30,
     padding: 15,
     backgroundColor: '#f8f9fa',
     borderRadius: 12,
