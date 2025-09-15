@@ -119,16 +119,6 @@ const Iniziale = () => {
           </TouchableOpacity>
         </View>
       )}
-
-      {!loading && !recipeOfTheDay && (
-        <View style={styles.recipeOfTheDay}>
-          <Text style={styles.recipeTitle}>🍳 Ricetta del Giorno</Text>
-          <View style={styles.emptyRecipeCard}>
-            <Text style={styles.emptyText}>Nessuna ricetta disponibile</Text>
-            <Text style={styles.emptySubtext}>Crea la tua prima ricetta!</Text>
-          </View>
-        </View>
-      )}
       </View>
     </ScrollView>
   );
