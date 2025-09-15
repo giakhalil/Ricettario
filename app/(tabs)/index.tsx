@@ -32,15 +32,78 @@ const Iniziale = () => {
     <ScrollView contentContainerStyle={styles.container}> 
       <Image
       source={require('@/assets/icons/logo.png')}
-      style={styles.image}
+      style={styles.logo}
       resizeMode="contain"
       />
-      <Text style={styles.title}>Benvenuto 👋</Text>
-      <Text style={styles.subtitle}>Gestisci le tue ricette facilmente</Text>
 
-       {!loading && recipeOfTheDay && (
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: "#386641" }]} 
+          onPress={() => router.push("/ricette/recipes")}
+        >
+           <View style={styles.buttonContent}>
+            <Image
+              source={require('@/assets/icons/ricette.png')}
+              style={styles.image}
+              resizeMode="contain"
+            />
+            <Text style={styles.buttonText}>Che mangiamo?</Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: "#64994E" }]} 
+          onPress={() => router.push("/shoppingList")}
+        >
+        <View style={styles.buttonContent}>
+            <Image
+              source={require('@/assets/icons/carrello.png')}
+              style={styles.image}
+              resizeMode="contain"
+            />
+            <Text style={styles.buttonText}>Lista della spesa</Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, { backgroundColor: "#A7C957" }]}
+          onPress={() => router.push("../fridge")}
+        >
+          <View style={styles.buttonContent}>
+            <Image
+              source={require('@/assets/icons/fridge.png')}
+              style={styles.image}
+              resizeMode="contain"
+            />
+            <Text style={styles.buttonText}>Cosa Ho in Frigo?</Text>
+          </View>
+        
+      </TouchableOpacity>
+
+      <TouchableOpacity
+      style={[styles.button, { backgroundColor: "#BC4749" }]}
+      onPress={() => router.push("/ricette/liste")}
+      >
+        <View style={styles.buttonContent}>
+            <Image
+              source={require('@/assets/icons/liste.png')}
+              style={styles.image}
+              resizeMode="contain"
+            />
+            <Text style={styles.buttonText}>Le Mie Liste</Text>
+          </View>
+     </TouchableOpacity>
+
+        {!loading && recipeOfTheDay && (
         <View style={styles.recipeOfTheDay}>
-          <Text style={styles.recipeTitle}>🍳 Ricetta del Giorno</Text>
+          <View style={styles.buttonContent}>
+            <Image
+              source={require('@/assets/icons/calendar.png')}
+              style={styles.image}
+              resizeMode="contain"
+            />
+          </View>
+          <Text style={styles.recipeTitle}> Ricetta del Giorno</Text>
           <TouchableOpacity
             style={styles.recipeCard}
             onPress={() => router.push(`/ricette/${recipeOfTheDay.id}`)}
@@ -66,35 +129,6 @@ const Iniziale = () => {
           </View>
         </View>
       )}
-
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => router.push("/ricette/recipes")}
-        >
-          <Text style={styles.buttonText}>🍴 Vai alle Ricette</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: "#386641" }]} 
-          onPress={() => router.push("/shoppingList")}
-        >
-          <Text style={styles.buttonText}>🛒 Lista della Spesa</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: "#4CAF50" }]}
-          onPress={() => router.push("../fridge")}
-        >
-          <Text style={styles.buttonText}> ❄️ Il Mio Frigo</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-      style={[styles.button, { backgroundColor: "#6A4C93" }]}
-      onPress={() => router.push("/ricette/liste")}
-      >
-      <Text style={styles.buttonText}>📋 Le Mie Liste</Text>
-     </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -108,37 +142,35 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 20,
   },
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    marginBottom: 10,
-    textAlign: "center",
-  },
-  subtitle: {
-    fontSize: 18,
-    color: "#666",
-    marginBottom: 30,
-    textAlign: "center",
-  },
+
   buttonContainer: {
     width: '100%',
     alignItems: 'center',
     gap: 15,
   },
   button: {
-    backgroundColor: "#64994E",
-    paddingHorizontal: 25,
-    paddingVertical: 15,
-    borderRadius: 10,
+    paddingHorizontal: 40,
+    paddingVertical: 30,
+    borderRadius: 20,
     width: '80%',
     alignItems: 'center',
   },
   buttonText: {
     color: "#fff",
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "600",
   },
+   buttonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
+   },
    image: {
+    width: 60,
+    height: 60,
+   },
+    logo: {
     width: 400,
     height: 200,
     marginBottom: 20,
@@ -153,11 +185,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 15,
-    color: '#bc4749',
+    color: '#577590',
   },
   recipeCard: {
     width: '90%',
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#f2e8cf',
     borderRadius: 12,
     padding: 15,
     alignItems: 'center',
@@ -181,7 +213,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: 5,
     textAlign: 'center',
-    color: '#2d4a2f',
+    color: '#577590',
   },
   recipeHint: {
     fontSize: 14,
@@ -199,13 +231,13 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 16,
-    color: '#6c757d',
+    color: '#577590',
     marginBottom: 5,
     textAlign: 'center',
   },
   emptySubtext: {
     fontSize: 14,
-    color: '#adb5bd',
+    color: '#577590',
     textAlign: 'center',
   }
 });
