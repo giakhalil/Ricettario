@@ -1,8 +1,9 @@
 import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Image, ScrollView, StyleSheet, Text } from "react-native";
+import { ActivityIndicator, Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import DeleteButton from "../../components/DeleteButton";
+import { getRecipeRating, saveRating } from "../../utils/RatingStorage";
 import { getRecipeById, Recipe } from "../../utils/recipeStorage";
 
 
@@ -10,6 +11,7 @@ const RecipeDetail = () => {
   const { id } = useLocalSearchParams();
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [loading, setLoading] = useState(true);
+  const [rating, setRating] = useState(0); 
 
   useEffect(() => {
     const loadRecipe = async () => {
@@ -21,6 +23,27 @@ const RecipeDetail = () => {
     };
     loadRecipe();
   }, [id]);
+
+   useEffect(() => {
+    const loadRating = async () => {
+      if (recipe) {
+        const userRating = await getRecipeRating(recipe.id);
+        setRating(userRating);
+      }
+    };
+    loadRating();
+  }, [recipe]);
+
+  const handleRate = async (stars: number) => {
+    if (recipe) {
+      const success = await saveRating(recipe.id, stars);
+      if (success) {
+        setRating(stars);
+        Alert.alert("Grazie!", "La tua valutazione è stata salvata");
+      }
+    }
+  };
+
 
   if (loading) {
     return (
@@ -80,6 +103,25 @@ return (
         )}
 
         <DeleteButton recipeId={recipe.id} recipeTitle={recipe.title} />
+        <SafeAreaView style={styles.ratingSection}>
+        <Text style={styles.ratingTitle}>Valuta questa ricetta:</Text>
+        <SafeAreaView style={styles.starsContainer}>
+          {[1, 2, 3, 4, 5].map((star) => (
+            <TouchableOpacity
+              key={star}
+              onPress={() => handleRate(star)}
+              style={styles.starButton}
+            >
+              <Text style={styles.star}>
+                {star <= rating ? "⭐" : "☆"}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </SafeAreaView>
+        <Text style={styles.ratingText}>
+          {rating > 0 ? `Hai valutato ${rating} stelle` : "Seleziona le stelle"}
+        </Text>
+      </SafeAreaView>
       </ScrollView>
     </SafeAreaView>
   );
@@ -112,7 +154,30 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 16,
     resizeMode: 'cover'
-  }
+  },
+    ratingSection: {
+    marginVertical: 20,
+    alignItems: "center",
+  },
+  ratingTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  starsContainer: {
+    flexDirection: "row",
+    marginBottom: 10,
+  },
+  starButton: {
+    padding: 5,
+  },
+  star: {
+    fontSize: 32,
+  },
+  ratingText: {
+    fontSize: 16,
+    color: "#666",
+  },
 });
 
 export default RecipeDetail;

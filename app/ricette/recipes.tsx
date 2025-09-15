@@ -1,3 +1,4 @@
+import { getAverageRating } from "@/utils/RatingStorage";
 import { useFocusEffect, useNavigation, useRouter } from "expo-router";
 import React, { useCallback, useLayoutEffect, useState } from "react";
 import { FlatList, SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
@@ -6,12 +7,16 @@ import EditButton from "../../components/EditButton";
 import FavoriteButton from "../../components/FavoriteButton";
 import { getRecipes, Recipe } from "../../utils/recipeStorage";
 
+interface RecipeWithRating extends Recipe {
+  rating: number;
+}
+
 const Home = () => {
   const router = useRouter();
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [recipes, setRecipes] = useState<RecipeWithRating[]>([]);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation()
-  const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
+  const [filteredRecipes, setFilteredRecipes] =  useState<RecipeWithRating[]>([]); 
   const [searchText, setSearchText] = useState("");
   
   useLayoutEffect(() => {
@@ -23,9 +28,17 @@ const Home = () => {
   const loadRecipes = useCallback(async () => {
     setLoading(true);
     const stored = await getRecipes();
-    setRecipes(stored);
-    setFilteredRecipes(stored);
+
+    const recipesWithRating = await Promise.all(
+      stored.map(async (recipe) => {
+        const rating = await getAverageRating(recipe.id);
+        return { ...recipe, rating };
+      })
+    );
+    setRecipes(recipesWithRating);
+    setFilteredRecipes(recipesWithRating);
     setLoading(false);
+    
   }, []);
 
   const handleSearch = (text: string) => {
@@ -73,6 +86,7 @@ const Home = () => {
                 onPress={() => router.push(`/ricette/${item.id}`)}
               >
                 🍴 {item.title}
+                {item.rating > 0 && ` ⭐ ${item.rating.toFixed(1)}`}
               </Text>
               <View style={styles.buttonContainer}>
                 <FavoriteButton recipeId={item.id} />
