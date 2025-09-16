@@ -1,6 +1,15 @@
 import { useNavigation } from "expo-router";
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { Alert, Button, SafeAreaView, StyleSheet, Text, TextInput } from "react-native";
+import {
+  ActivityIndicator,
+  Alert,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
+} from "react-native";
 import { getCurrentUser, getUser, updateUserPassword } from "../utils/storage";
 
 export default function Credentials() {
@@ -74,60 +83,107 @@ export default function Credentials() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Credenziali Utente</Text>
-      {username ? (
-        <Text style={styles.label}>Username: {username}</Text>
-      ) : (
-        <Text style={styles.label}>Caricamento...</Text>
-      )}
+      <View style={styles.content}>
+        <Text style={styles.title}>Credenziali Utente</Text>
+        
+        {username ? (
+          <Text style={styles.label}>Username: {username}</Text>
+        ) : (
+          <Text style={styles.label}>Caricamento...</Text>
+        )}
 
-      <Text style={styles.subtitle}>Modifica password</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Vecchia password"
-        secureTextEntry
-        value={oldPassword}
-        onChangeText={setOldPassword}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Nuova password"
-        secureTextEntry
-        value={newPassword}
-        onChangeText={setNewPassword}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Conferma nuova password"
-        secureTextEntry
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-      />
+        <Text style={styles.subtitle}>Modifica password</Text>
+        
+        <TextInput
+          style={styles.input}
+          placeholder="Vecchia password"
+          secureTextEntry
+          value={oldPassword}
+          onChangeText={setOldPassword}
+        />
+        
+        <TextInput
+          style={styles.input}
+          placeholder="Nuova password"
+          secureTextEntry
+          value={newPassword}
+          onChangeText={setNewPassword}
+        />
+        
+        <TextInput
+          style={styles.input}
+          placeholder="Conferma nuova password"
+          secureTextEntry
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+        />
 
-      <Button
-        title={loading ? "⏳ Aggiornamento..." : "🔒 Aggiorna password"}
-        onPress={handleChangePassword}
-        disabled={loading}
-      />
+        <TouchableOpacity
+          style={[styles.button, loading && styles.buttonDisabled]}
+          onPress={handleChangePassword}
+          disabled={loading}
+        >
+          {loading ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <Text style={styles.buttonText}>Aggiorna password</Text>
+          )}
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: "#fff" },
-  title: { fontSize: 22, fontWeight: "bold", marginBottom: 20 },
-  subtitle: { fontSize: 18, fontWeight: "600", marginTop: 20, marginBottom: 10 },
-  label: { fontSize: 16, marginBottom: 5 },
+  container: { 
+    flex: 1, 
+    backgroundColor: "#fff" 
+  },
+  content: {
+    padding: 20,
+    marginTop: 40
+  },
+  title: { 
+    fontSize: 24, 
+    fontWeight: "bold", 
+    marginBottom: 20, 
+    textAlign: "center",
+    color: "#386641"
+  },
+  subtitle: { 
+    fontSize: 18, 
+    fontWeight: "600", 
+    marginTop: 20, 
+    marginBottom: 15,
+    color: "#386641"
+  },
+  label: { 
+    fontSize: 16, 
+    marginBottom: 20,
+    textAlign: "center"
+  },
   input: {
     borderWidth: 1,
     borderColor: "#ccc",
-    borderRadius: 8,
-    padding: 10,
+    borderRadius: 5,
+    padding: 12,
     fontSize: 16,
-    marginBottom: 12,
+    marginBottom: 15,
     backgroundColor: "#f9f9f9",
   },
+  button: {
+    backgroundColor: "#386641",
+    padding: 15,
+    borderRadius: 5,
+    alignItems: "center",
+    marginTop: 10
+  },
+  buttonDisabled: {
+    backgroundColor: "#a5a5a5"
+  },
+  buttonText: {
+    color: "white", 
+    fontSize: 16,
+    fontWeight: "600"
+  }
 });
-
-
-
