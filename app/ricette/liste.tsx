@@ -86,7 +86,7 @@ const Lists = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Le Mie Liste 📋</Text>
+      <Text style={styles.title}>Le Mie Liste</Text>
 
       <TouchableOpacity
         style={styles.createButton}
@@ -192,9 +192,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
+    color: "#386641"
   },
   createButton: {
-    backgroundColor: '#6A4C93',
+    backgroundColor: '#64994E',
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
@@ -250,6 +251,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
+    color: "#386641"
   },
   input: {
     borderWidth: 1,
@@ -298,7 +300,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ccc',
   },
   createListButton: {
-    backgroundColor: '#6A4C93',
+    backgroundColor: '#BC4749',
   },
   modalButtonText: {
     color: '#fff',

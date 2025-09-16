@@ -45,7 +45,7 @@ const ShoppingList = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Lista della Spesa 🛒</Text>
+      <Text style={styles.title}>Lista della Spesa</Text>
 
       <View style={styles.addContainer}>
         <TextInput
@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
+    color: "#386641",
   },
   addContainer: {
     flexDirection: 'row',

@@ -96,7 +96,7 @@ const Fridge = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Il Mio Frigo ❄️</Text>
+      <Text style={styles.title}>Il Mio Frigo</Text>
 
       <View style={styles.addContainer}>
         <TextInput
@@ -195,6 +195,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
+    color: "#386641",
   },
   addContainer: {
     flexDirection: 'row',
@@ -277,6 +278,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
+    color: "#386641",
   },
   recipeItem: {
     padding: 15,

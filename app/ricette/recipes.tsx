@@ -85,8 +85,9 @@ const Home = () => {
                 style={styles.recipe}
                 onPress={() => router.push(`/ricette/${item.id}`)}
               >
-                🍴 {item.title}
-                {item.rating > 0 && ` ⭐ ${item.rating.toFixed(1)}`}
+                {item.title}
+                 {"\n"}
+                {item.rating > 0 && `⭐ ${item.rating.toFixed(1)}`}
               </Text>
               <View style={styles.buttonContainer}>
                 <FavoriteButton recipeId={item.id} />
@@ -114,10 +115,12 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: "bold",
     marginBottom: 16,
     textAlign: "center",
+    color:"#386641",
+    marginLeft: 0,
   },
   searchContainer: {
     marginBottom: 16,
@@ -128,7 +131,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 12,
     fontSize: 16,
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#fff",
   },
   recipeRow: {
     flexDirection: "row",

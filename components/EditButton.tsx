@@ -16,7 +16,7 @@ const EditButton: React.FC<Props> = ({ recipeId }) => {
       }
       accessibilityLabel="Modifica ricetta"
     >
-      <MaterialIcons name="edit" size={22} color="#2196F3" />
+      <MaterialIcons name="edit" size={22} color="#64994E" />
     </TouchableOpacity>
   );
 };

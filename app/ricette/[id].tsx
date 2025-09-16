@@ -1,11 +1,10 @@
 import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import DeleteButton from "../../components/DeleteButton";
 import { getRecipeRating, saveRating } from "../../utils/RatingStorage";
 import { getRecipeById, Recipe } from "../../utils/recipeStorage";
-
 
 const RecipeDetail = () => {
   const { id } = useLocalSearchParams();
@@ -44,7 +43,6 @@ const RecipeDetail = () => {
     }
   };
 
-
   if (loading) {
     return (
       <SafeAreaView style={styles.container}>
@@ -73,55 +71,88 @@ const RecipeDetail = () => {
     }).join('\n');
   };
 
-return (
+  return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-        {recipe.image && (
-          <Image source={{ uri: recipe.image }} style={styles.image} />
-        )}
-        
-        <Text style={styles.title}>{recipe.title}</Text>
-        
-        {recipe.cookingTime && (
-          <>
-            <Text style={styles.subtitle}>Tempo di cottura:</Text>
-            <Text style={styles.text}>{recipe.cookingTime}</Text>
-          </>
-        )}
-
-        <Text style={styles.subtitle}>Ingredienti:</Text>
-        <Text style={styles.text}>{getIngredientsWithQuantities()}</Text>
-
-        <Text style={styles.subtitle}>Preparazione:</Text>
-        <Text style={styles.text}>{recipe.instructions}</Text>
-
-        {recipe.notes && (
-          <>
-            <Text style={styles.subtitle}>Note:</Text>
-            <Text style={styles.text}>{recipe.notes}</Text>
-          </>
-        )}
-
-        <DeleteButton recipeId={recipe.id} recipeTitle={recipe.title} />
-        <SafeAreaView style={styles.ratingSection}>
-        <Text style={styles.ratingTitle}>Valuta questa ricetta:</Text>
-        <SafeAreaView style={styles.starsContainer}>
-          {[1, 2, 3, 4, 5].map((star) => (
-            <TouchableOpacity
-              key={star}
-              onPress={() => handleRate(star)}
-              style={styles.starButton}
-            >
-              <Text style={styles.star}>
-                {star <= rating ? "⭐" : "☆"}
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.Container2}>
+          {recipe.image && (
+            <Image 
+              source={{ uri: recipe.image }} 
+              style={styles.image} 
+            />
+          )}
+          <View style={styles.overlay} />
+          <Text style={styles.title}>{recipe.title}</Text>
+        </View>
+        <View style={styles.contentContainer}>
+      
+          {recipe.cookingTime && (
+            <View style={styles.infoCard}>
+              <Text style={styles.infoIcon}>⏱️</Text>
+              <View style={styles.infoTextContainer}>
+                <Text style={styles.infoLabel}>Tempo di cottura</Text>
+                <Text style={styles.infoValue}>{recipe.cookingTime}</Text>
+              </View>
+            </View>
+          )}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>🍴 Ingredienti</Text>
+            <View style={styles.card}>
+              <Text style={styles.ingredientsText}>
+                {getIngredientsWithQuantities().split('\n').map((line, index) => (
+                  <Text key={index}>
+                    • {line}{'\n'}
+                  </Text>
+                ))}
               </Text>
-            </TouchableOpacity>
-          ))}
-        </SafeAreaView>
-        <Text style={styles.ratingText}>
-          {rating > 0 ? `Hai valutato ${rating} stelle` : "Seleziona le stelle"}
-        </Text>
-      </SafeAreaView>
+            </View>
+          </View>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>👨‍🍳 Preparazione</Text>
+            <View style={styles.card}>
+              <Text style={styles.instructionsText}>
+                {recipe.instructions.split('\n').map((line, index) => (
+                  <Text key={index}>
+                    {index + 1}. {line}{'\n\n'}
+                  </Text>
+                ))}
+              </Text>
+            </View>
+          </View>
+          {recipe.notes && (
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>📝 Note</Text>
+              <View style={styles.card}>
+                <Text style={styles.notesText}>{recipe.notes}</Text>
+              </View>
+            </View>
+          )}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>⭐ Valuta questa ricetta</Text>
+            <View style={styles.card}>
+              <View style={styles.starsContainer}>
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <TouchableOpacity
+                    key={star}
+                    onPress={() => handleRate(star)}
+                    style={styles.starButton}
+                  >
+                    <Text style={[styles.star, star <= rating && styles.starFilled]}>
+                      {star <= rating ? "⭐" : "☆"}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+              <Text style={styles.ratingText}>
+                {rating > 0 ? `Hai valutato ${rating} stelle` : "Tocca una stella per votare"}
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <DeleteButton recipeId={recipe.id} recipeTitle={recipe.title} />
+          </View>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -130,53 +161,117 @@ return (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: "#f8f9fa",
   },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 12,
+  Container2: {
+    position: 'relative',
+    height: 300,
+    marginBottom: 20,
   },
-  subtitle: {
-    fontSize: 18,
-    fontWeight: "600",
-    marginTop: 10,
-  },
-  text: {
-    fontSize: 16,
-    marginTop: 4,
-  },
-
   image: {
     width: '100%',
-    height: 200,
-    borderRadius: 8,
-    marginBottom: 16,
+    height: '100%',
     resizeMode: 'cover'
   },
-    ratingSection: {
-    marginVertical: 20,
-    alignItems: "center",
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.3)',
   },
-  ratingTitle: {
-    fontSize: 18,
+  title: {
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    fontSize: 28,
     fontWeight: "bold",
-    marginBottom: 10,
+    color: "white",
+    textShadowColor: 'rgba(0,0,0,0.8)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 10,
+  },
+  contentContainer: {
+    padding: 20,
+    marginTop: -30,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    backgroundColor: "white",
+  },
+  infoCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#e8f5e8',
+    padding: 15,
+    borderRadius: 15,
+    marginBottom: 20,
+  },
+  infoIcon: {
+    fontSize: 24,
+    marginRight: 12,
+  },
+  infoTextContainer: {
+    flex: 1,
+  },
+  infoLabel: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 2,
+  },
+  infoValue: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#386641',
+  },
+  section: {
+    marginBottom: 25,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#386641",
+    marginBottom: 12,
+    marginLeft: 5,
+  },
+  card: {
+    backgroundColor: "#f8f9fa",
+    padding: 20,
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: '#e9ecef',
+  },
+  ingredientsText: {
+    fontSize: 16,
+    lineHeight: 24,
+    color: "#333",
+  },
+  instructionsText: {
+    fontSize: 16,
+    lineHeight: 24,
+    color: "#333",
+  },
+  notesText: {
+    fontSize: 16,
+    fontStyle: 'italic',
+    color: "#666",
+    lineHeight: 22,
   },
   starsContainer: {
     flexDirection: "row",
-    marginBottom: 10,
+    justifyContent: 'center',
+    marginBottom: 20,
   },
   starButton: {
-    padding: 5,
+    padding: 8,
   },
   star: {
-    fontSize: 32,
+    fontSize: 36,
+    color: '#ccc',
+  },
+  starFilled: {
+    color: '#ffd700',
   },
   ratingText: {
     fontSize: 16,
     color: "#666",
+    textAlign: 'center',
   },
 });
 

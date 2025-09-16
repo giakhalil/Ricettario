@@ -13,7 +13,6 @@ export const addToFavorites = async (recipeId: string): Promise<boolean> => {
     }
     return true;
   } catch (error) {
-    console.error("Error adding to favorites:", error);
     return false;
   }
 };
@@ -26,7 +25,6 @@ export const removeFromFavorites = async (recipeId: string): Promise<boolean> =>
     await AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(updatedFavorites));
     return true;
   } catch (error) {
-    console.error('Error removing from favorites:', error);
     return false;
   }
 };
@@ -39,7 +37,6 @@ export const getFavorites = async (): Promise<string[]> => {
     const favorites = JSON.parse(json) as string[];
     return [...new Set(favorites)].filter(id => id && typeof id === 'string');
   } catch (error) {
-    console.error("Error getting favorites:", error);
     return [];
   }
 };
@@ -57,10 +54,8 @@ export const cleanupFavorites = async (): Promise<boolean> => {
     );
     
     await AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(cleanedFavorites));
-    console.log('Pulizia preferiti completata:', cleanedFavorites);
     return true;
   } catch (error) {
-    console.error('Errore nella pulizia preferiti:', error);
     return false;
   }
 };
