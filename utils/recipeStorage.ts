@@ -23,7 +23,6 @@ export const saveRecipe = async (
     await AsyncStorage.setItem(RECIPES_KEY, JSON.stringify(updated));
     return newRecipe;
   } catch (error) {
-    console.error("Error saving recipe:", error);
     return null;
   }
 };
@@ -33,7 +32,6 @@ export const getRecipes = async (): Promise<Recipe[]> => {
     const json = await AsyncStorage.getItem(RECIPES_KEY);
     return json ? (JSON.parse(json) as Recipe[]) : [];
   } catch (error) {
-    console.error("Error getting recipes:", error);
     return [];
   }
 };
@@ -43,7 +41,6 @@ export const getRecipeById = async (id: string): Promise<Recipe | null> => {
     const recipes = await getRecipes();
     return recipes.find((r) => r.id === id) ?? null;
   } catch (error) {
-    console.error("Error getting recipe by id:", error);
     return null;
   }
 };
@@ -55,7 +52,6 @@ export const deleteRecipe = async (id: string): Promise<boolean> => {
     await AsyncStorage.setItem(RECIPES_KEY, JSON.stringify(updatedRecipes));
     return true;
   } catch (error) {
-    console.error("Errore eliminazione ricetta:", error);
     return false;
   }
 };

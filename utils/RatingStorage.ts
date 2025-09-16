@@ -22,7 +22,6 @@ export const saveRating = async (recipeId: string, stars: number): Promise<boole
     await AsyncStorage.setItem(RATINGS_KEY, JSON.stringify(ratings));
     return true;
   } catch (error) {
-    console.error("Error saving rating:", error);
     return false;
   }
 };
@@ -32,7 +31,6 @@ export const getRatings = async (): Promise<Rating[]> => {
     const json = await AsyncStorage.getItem(RATINGS_KEY);
     return json ? (JSON.parse(json) as Rating[]) : [];
   } catch (error) {
-    console.error("Error getting ratings:", error);
     return [];
   }
 };

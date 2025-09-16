@@ -20,7 +20,6 @@ export const saveFridgeItem = async (item: Omit<FridgeItem, "id">): Promise<Frid
     await AsyncStorage.setItem(FRIDGE_KEY, JSON.stringify(updatedItems));
     return newItem;
   } catch (error) {
-    console.error("Error saving fridge item:", error);
     return null;
   }
 };
@@ -30,7 +29,6 @@ export const getFridgeItems = async (): Promise<FridgeItem[]> => {
     const json = await AsyncStorage.getItem(FRIDGE_KEY);
     return json ? (JSON.parse(json) as FridgeItem[]) : [];
   } catch (error) {
-    console.error("Error getting fridge items:", error);
     return [];
   }
 };
@@ -42,7 +40,6 @@ export const deleteFridgeItem = async (id: string): Promise<boolean> => {
     await AsyncStorage.setItem(FRIDGE_KEY, JSON.stringify(updatedItems));
     return true;
   } catch (error) {
-    console.error("Error deleting fridge item:", error);
     return false;
   }
 };
@@ -56,7 +53,6 @@ export const updateFridgeItem = async (id: string, updates: Partial<FridgeItem>)
     await AsyncStorage.setItem(FRIDGE_KEY, JSON.stringify(updatedItems));
     return true;
   } catch (error) {
-    console.error("Error updating fridge item:", error);
     return false;
   }
 };

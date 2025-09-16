@@ -5,9 +5,11 @@ const FAVORITES_KEY = "@favorites";
 export const addToFavorites = async (recipeId: string): Promise<boolean> => {
   try {
     const favorites = await getFavorites();
-    if (!favorites.includes(recipeId)) {
-      favorites.push(recipeId);
-      await AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+    const cleanedFavorites = [...new Set(favorites)];
+    
+    if (!cleanedFavorites.includes(recipeId)) {
+      cleanedFavorites.push(recipeId);
+      await AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(cleanedFavorites));
     }
     return true;
   } catch (error) {
@@ -20,10 +22,11 @@ export const removeFromFavorites = async (recipeId: string): Promise<boolean> =>
   try {
     const favorites = await getFavorites();
     const updatedFavorites = favorites.filter(id => id !== recipeId);
+    
     await AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(updatedFavorites));
     return true;
   } catch (error) {
-    console.error("Error removing from favorites:", error);
+    console.error('Error removing from favorites:', error);
     return false;
   }
 };
@@ -31,7 +34,10 @@ export const removeFromFavorites = async (recipeId: string): Promise<boolean> =>
 export const getFavorites = async (): Promise<string[]> => {
   try {
     const json = await AsyncStorage.getItem(FAVORITES_KEY);
-    return json ? (JSON.parse(json) as string[]) : [];
+    if (!json) return [];
+    
+    const favorites = JSON.parse(json) as string[];
+    return [...new Set(favorites)].filter(id => id && typeof id === 'string');
   } catch (error) {
     console.error("Error getting favorites:", error);
     return [];
@@ -41,4 +47,20 @@ export const getFavorites = async (): Promise<string[]> => {
 export const isFavorite = async (recipeId: string): Promise<boolean> => {
   const favorites = await getFavorites();
   return favorites.includes(recipeId);
+};
+
+export const cleanupFavorites = async (): Promise<boolean> => {
+  try {
+    const favorites = await getFavorites();
+    const cleanedFavorites = [...new Set(favorites)].filter(id => 
+      id && typeof id === 'string' && id.trim() !== ''
+    );
+    
+    await AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(cleanedFavorites));
+    console.log('Pulizia preferiti completata:', cleanedFavorites);
+    return true;
+  } catch (error) {
+    console.error('Errore nella pulizia preferiti:', error);
+    return false;
+  }
 };

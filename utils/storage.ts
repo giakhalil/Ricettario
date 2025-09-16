@@ -8,12 +8,10 @@ export interface User {
   password: string;
 }
 
-// Aggiungi queste funzioni:
 export const setCurrentUser = async (username: string): Promise<void> => {
   try {
     await AsyncStorage.setItem(CURRENT_USER_KEY, username);
   } catch (error) {
-    console.error('Error setting current user:', error);
   }
 };
 
@@ -21,7 +19,6 @@ export const getCurrentUser = async (): Promise<string | null> => {
   try {
     return await AsyncStorage.getItem(CURRENT_USER_KEY);
   } catch (error) {
-    console.error('Error getting current user:', error);
     return null;
   }
 };
@@ -30,7 +27,6 @@ export const clearCurrentUser = async (): Promise<void> => {
   try {
     await AsyncStorage.removeItem(CURRENT_USER_KEY);
   } catch (error) {
-    console.error('Error clearing current user:', error);
   }
 };
 
@@ -41,7 +37,6 @@ export const saveUser = async (username: string, password: string): Promise<void
     const updatedUsers = { ...existingUsers, [username]: newUser };
     await AsyncStorage.setItem(USERS_KEY, JSON.stringify(updatedUsers));
   } catch (error) {
-    console.error('Error saving user:', error);
   }
 };
 
@@ -60,7 +55,6 @@ export const updateUserPassword = async (username: string, newPassword: string):
     await AsyncStorage.setItem(USERS_KEY, JSON.stringify(updatedUsers));
     return true;
   } catch (error) {
-    console.error('Error updating password:', error);
     return false;
   }
 };
@@ -70,7 +64,6 @@ export const getUsers = async (): Promise<Record<string, User>> => {
     const usersJson = await AsyncStorage.getItem(USERS_KEY);
     return usersJson ? JSON.parse(usersJson) : {};
   } catch (error) {
-    console.error('Error getting users:', error);
     return {};
   }
 };

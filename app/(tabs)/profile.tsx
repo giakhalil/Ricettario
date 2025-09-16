@@ -1,13 +1,15 @@
 import { getRatings } from "@/utils/RatingStorage";
+import { getFilteredShoppingList } from "@/utils/ShopppingListStorage";
+import { useFocusEffect } from '@react-navigation/native';
 import { useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import LogoutButton from '../../components/LogoutButtn';
-import { getFavorites } from "../../utils/FavoriteStorage";
+import { cleanupFavorites, getFavorites } from "../../utils/FavoriteStorage";
 import { getFridgeItems } from "../../utils/FridgeStorage";
 import { getLists } from "../../utils/ListeStorage";
 import { getRecipes } from "../../utils/recipeStorage";
-import { getShoppingList } from "../../utils/ShopppingListStorage";
+
 
 export default function Profile() {
   const router = useRouter();
@@ -20,16 +22,19 @@ export default function Profile() {
     averageRating: 0,
   });
 
-   useEffect(() => {
-    const loadStats = async () => {
-      const [recipes, favorites, fridgeItems, lists, shoppingItems, ratings] = await Promise.all([
-        getRecipes(),
-        getFavorites(),
-        getFridgeItems(),
-        getLists(),
-        getShoppingList(),
-        getRatings(),
-      ]);
+   useFocusEffect(
+    useCallback(() => {
+      const loadStats = async () => {
+         await cleanupFavorites();
+        const [recipes, favorites, fridgeItems, lists, shoppingItems, ratings] = await Promise.all([
+          getRecipes(),
+          getFavorites(),
+          getFridgeItems(),
+          getLists(),
+          getFilteredShoppingList(),
+          getRatings()
+        ]);
+
       const averageRating = ratings.length > 0 
         ? ratings.reduce((sum, rating) => sum + rating.stars, 0) / ratings.length
         : 0;
@@ -45,7 +50,7 @@ export default function Profile() {
     };
 
     loadStats();
-  }, []);
+  }, []));
 
 return (
   <View style={styles.container}>
@@ -106,7 +111,6 @@ return (
             <Text style={styles.statLabel}>Voto medio</Text>
           </View>
         </View>
-        
       </View>
      </View>
 );
