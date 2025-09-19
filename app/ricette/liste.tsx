@@ -265,6 +265,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 15,
+    color: "#64994e",
+    marginLeft: 11,
   },
   recipeItem: {
     flexDirection: 'row',

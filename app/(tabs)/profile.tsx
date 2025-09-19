@@ -9,11 +9,20 @@ import { cleanupFavorites, getFavorites } from "../../utils/FavoriteStorage";
 import { getFridgeItems } from "../../utils/FridgeStorage";
 import { getLists } from "../../utils/ListeStorage";
 import { getRecipes } from "../../utils/recipeStorage";
+import { getCurrentUser, getUserIcon } from "../../utils/storage";
 
+const availableIcons = [
+  require('@/assets/icons/user1.png'),
+  require('@/assets/icons/user2.png'),
+  require('@/assets/icons/user3.png'),
+  require('@/assets/icons/user4.png'),
+  require('@/assets/icons/user5.png'),
+  require('@/assets/icons/user6.png'),
+];
 
 export default function Profile() {
   const router = useRouter();
-   const [stats, setStats] = useState({
+  const [stats, setStats] = useState({
     recipes: 0,
     favorites: 0,
     fridgeItems: 0,
@@ -21,11 +30,18 @@ export default function Profile() {
     shoppingItems: 0,
     averageRating: 0,
   });
+  const [userIconIndex, setUserIconIndex] = useState(0); 
 
-   useFocusEffect(
+  useFocusEffect(
     useCallback(() => {
       const loadStats = async () => {
-         await cleanupFavorites();
+        const currentUsername = await getCurrentUser();
+        if (currentUsername) {
+          const iconIndex = await getUserIcon(currentUsername);
+          setUserIconIndex(iconIndex);
+        }
+
+        await cleanupFavorites();
         const [recipes, favorites, fridgeItems, lists, shoppingItems, ratings] = await Promise.all([
           getRecipes(),
           getFavorites(),
@@ -35,37 +51,37 @@ export default function Profile() {
           getRatings()
         ]);
 
-      const averageRating = ratings.length > 0 
-        ? ratings.reduce((sum, rating) => sum + rating.stars, 0) / ratings.length
-        : 0;
+        const averageRating = ratings.length > 0 
+          ? ratings.reduce((sum, rating) => sum + rating.stars, 0) / ratings.length
+          : 0;
 
-      setStats({
-        recipes: recipes.length,
-        favorites: favorites.length,
-        fridgeItems: fridgeItems.length,
-        lists: lists.length,
-        shoppingItems: shoppingItems.length,
-        averageRating: Number(averageRating.toFixed(1)) 
-      });
-    };
+        setStats({
+          recipes: recipes.length,
+          favorites: favorites.length,
+          fridgeItems: fridgeItems.length,
+          lists: lists.length,
+          shoppingItems: shoppingItems.length,
+          averageRating: Number(averageRating.toFixed(1)) 
+        });
+      };
 
-    loadStats();
-  }, []));
+      loadStats();
+    }, []));
 
-return (
-  <View style={styles.container}>
-     <View style={styles.header}>
-            <View style={styles.ImageContainer}>
-              <Image
-                source={require('@/assets/icons/user.png')}
-                style={styles.image}
-                resizeMode="contain"
-              />
-            </View>
-          </View>
-    <LogoutButton />
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <View style={styles.ImageContainer}>
+          <Image
+            source={availableIcons[userIconIndex]} 
+            style={styles.image}
+            resizeMode="contain"
+          />
+        </View>
+      </View>
+      <LogoutButton />
 
-    <View style={styles.credentialsCard}>
+      <View style={styles.credentialsCard}>
         <Text style={styles.credentialsTitle}>Profilo Utente</Text>
         <TouchableOpacity
           style={styles.credentialsButton}
@@ -74,7 +90,8 @@ return (
           <Text style={styles.credentialsText}>Gestici Profilo</Text>
         </TouchableOpacity>
       </View>
-        <View style={styles.statsContainer}>
+      
+      <View style={styles.statsContainer}>
         <Text style={styles.statsTitle}>Riepilogo Attività</Text>
         
         <View style={styles.statRow}>
@@ -100,20 +117,21 @@ return (
             <Text style={styles.statLabel}>Liste</Text>
           </View>
         </View>
-         <View style={styles.statRow}>
+        
+        <View style={styles.statRow}>
           <View style={styles.statItem}>
             <Text style={styles.statNumber}>{stats.shoppingItems}</Text>
             <Text style={styles.statLabel}>Lista spesa</Text>
           </View>
           
           <View style={styles.statItem}>
-        <Text style={styles.statNumber}>{stats.averageRating}</Text>
+            <Text style={styles.statNumber}>{stats.averageRating}</Text>
             <Text style={styles.statLabel}>Voto medio</Text>
           </View>
         </View>
       </View>
-     </View>
-);
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

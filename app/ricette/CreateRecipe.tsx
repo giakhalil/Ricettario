@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     resizeMode: 'cover'
   },
   imageButton: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#386641',
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',

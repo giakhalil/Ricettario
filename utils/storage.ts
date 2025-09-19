@@ -6,12 +6,14 @@ const CURRENT_USER_KEY = '@currentUser';
 export interface User {
   username: string;
   password: string;
+  icon?: number; 
 }
 
 export const setCurrentUser = async (username: string): Promise<void> => {
   try {
     await AsyncStorage.setItem(CURRENT_USER_KEY, username);
   } catch (error) {
+    console.error('Error setting current user:', error);
   }
 };
 
@@ -19,6 +21,7 @@ export const getCurrentUser = async (): Promise<string | null> => {
   try {
     return await AsyncStorage.getItem(CURRENT_USER_KEY);
   } catch (error) {
+    console.error('Error getting current user:', error);
     return null;
   }
 };
@@ -27,16 +30,18 @@ export const clearCurrentUser = async (): Promise<void> => {
   try {
     await AsyncStorage.removeItem(CURRENT_USER_KEY);
   } catch (error) {
+    console.error('Error clearing current user:', error);
   }
 };
 
 export const saveUser = async (username: string, password: string): Promise<void> => {
   try {
     const existingUsers = await getUsers();
-    const newUser = { username, password };
+    const newUser = { username, password, icon: 0 }; 
     const updatedUsers = { ...existingUsers, [username]: newUser };
     await AsyncStorage.setItem(USERS_KEY, JSON.stringify(updatedUsers));
   } catch (error) {
+    console.error('Error saving user:', error);
   }
 };
 
@@ -49,12 +54,16 @@ export const updateUserPassword = async (username: string, newPassword: string):
     
     const updatedUsers = {
       ...existingUsers,
-      [username]: { username, password: newPassword }
+      [username]: { 
+        ...existingUsers[username], 
+        password: newPassword 
+      }
     };
     
     await AsyncStorage.setItem(USERS_KEY, JSON.stringify(updatedUsers));
     return true;
   } catch (error) {
+    console.error('Error updating password:', error);
     return false;
   }
 };
@@ -64,6 +73,7 @@ export const getUsers = async (): Promise<Record<string, User>> => {
     const usersJson = await AsyncStorage.getItem(USERS_KEY);
     return usersJson ? JSON.parse(usersJson) : {};
   } catch (error) {
+    console.error('Error getting users:', error);
     return {};
   }
 };
@@ -71,4 +81,38 @@ export const getUsers = async (): Promise<Record<string, User>> => {
 export const getUser = async (username: string): Promise<User | null> => {
   const users = await getUsers();
   return users[username] || null;
+};
+
+export const updateUserIcon = async (username: string, iconIndex: number): Promise<boolean> => {
+  try {
+    const existingUsers = await getUsers();
+    if (!existingUsers[username]) {
+      return false;
+    }
+    
+    const updatedUsers = {
+      ...existingUsers,
+      [username]: { 
+        ...existingUsers[username], 
+        icon: iconIndex 
+      }
+    };
+    
+    await AsyncStorage.setItem(USERS_KEY, JSON.stringify(updatedUsers));
+    return true;
+  } catch (error) {
+    console.error('Error updating user icon:', error);
+    return false;
+  }
+};
+
+export const getUserIcon = async (username: string): Promise<number> => {
+  try {
+    const users = await getUsers();
+    const user = users[username];
+    return user && user.icon !== undefined ? user.icon : 0;
+  } catch (error) {
+    console.error('Error getting user icon:', error);
+    return 0;
+  }
 };

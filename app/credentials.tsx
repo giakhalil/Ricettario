@@ -3,14 +3,25 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
+  Image,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View
 } from "react-native";
-import { getCurrentUser, getUser, updateUserPassword } from "../utils/storage";
+import { getCurrentUser, getUser, getUserIcon, updateUserIcon, updateUserPassword } from "../utils/storage";
+
+const availableIcons = [
+  require('@/assets/icons/user1.png'),
+  require('@/assets/icons/user2.png'),
+  require('@/assets/icons/user3.png'),
+  require('@/assets/icons/user4.png'),
+  require('@/assets/icons/user5.png'),
+  require('@/assets/icons/user6.png'),
+];
 
 export default function Credentials() {
   const [username, setUsername] = useState<string | null>(null);
@@ -18,25 +29,30 @@ export default function Credentials() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [selectedIcon, setSelectedIcon] = useState(0); 
   const navigation = useNavigation();
 
- useEffect(() => {
+  useEffect(() => {
     const loadUser = async () => {
       const currentUsername = await getCurrentUser();
       if (currentUsername) {
         setUsername(currentUsername);
+        const currentIconIndex = await getUserIcon(currentUsername);
+        if (currentIconIndex !== null) {
+          setSelectedIcon(currentIconIndex);
+        }
       }
     };
     loadUser();
   }, []);
 
   useLayoutEffect(() => {
-      navigation.setOptions({
-        headerShown: false
-      });
-    }, [navigation]);
+    navigation.setOptions({
+      headerShown: false
+    });
+  }, [navigation]);
 
-   const handleChangePassword = async () => {
+  const handleChangePassword = async () => {
     if (!oldPassword || !newPassword || !confirmPassword) {
       Alert.alert("Errore", "Compila tutti i campi");
       return;
@@ -81,9 +97,22 @@ export default function Credentials() {
     }
   };
 
+  const handleIconSelect = async (index: number) => {
+    if (!username) return;
+    
+    setSelectedIcon(index);
+    const success = await updateUserIcon(username, index);
+    
+    if (success) {
+      Alert.alert("Successo", "Icona aggiornata!");
+    } else {
+      Alert.alert("Errore", "Impossibile aggiornare l'icona");
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
+      <ScrollView style={styles.content}> 
         <Text style={styles.title}>Credenziali Utente</Text>
         
         {username ? (
@@ -91,6 +120,26 @@ export default function Credentials() {
         ) : (
           <Text style={styles.label}>Caricamento...</Text>
         )}
+
+        <Text style={styles.subtitle}>Seleziona la tua icona</Text>
+        <View style={styles.iconsContainer}>
+          {availableIcons.map((icon, index) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() => handleIconSelect(index)}
+              style={[
+                styles.iconWrapper,
+                selectedIcon === index && styles.selectedIcon
+              ]}
+            >
+              <Image
+                source={icon}
+                style={styles.icon}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+          ))}
+        </View>
 
         <Text style={styles.subtitle}>Modifica password</Text>
         
@@ -129,7 +178,7 @@ export default function Credentials() {
             <Text style={styles.buttonText}>Aggiorna password</Text>
           )}
         </TouchableOpacity>
-      </View>
+      </ScrollView> 
     </SafeAreaView>
   );
 }
@@ -185,5 +234,26 @@ const styles = StyleSheet.create({
     color: "white", 
     fontSize: 16,
     fontWeight: "600"
+  },
+  iconsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    marginBottom: 20,
+  },
+  iconWrapper: {
+    padding: 10,
+    borderRadius: 50,
+    margin: 5,
+    borderWidth: 2,
+    borderColor: "transparent"
+  },
+  selectedIcon: {
+    borderColor: "#386641",
+    backgroundColor: "#f0f0f0"
+  },
+  icon: {
+    width: 50,
+    height: 50,
   }
 });
