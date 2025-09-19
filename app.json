@@ -3,41 +3,11 @@
     "name": "ChillMate",
     "slug": "Ricettario",
     "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icons/app.png",
-    "scheme": "ricettario",
-    "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "ios": {
-      "supportsTablet": true,
-      "icon": "./assets/icons/app.png",
-      "bundleIdentifier": "com.giadak21.ricettario"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/icons/app.png",
-        "backgroundColor": "#ffffff"
-      },
-      "edgeToEdgeEnabled": true,
-      "package": "com.giadak21.ricettario"
-    },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/app.png"
+      "favicon": ""
     },
-    "plugins": [
-      "expo-router",
-      [
-        "expo-splash-screen",
-        {
-          "image": "./assets/images/app.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
-        }
-      ]
-    ],
     "experiments": {
       "typedRoutes": true
     },
@@ -47,7 +17,7 @@
         "projectId": "d4085e7d-b773-4a62-a445-35ed9e77ed3d"
       }
     },
-    "runtimeVersion":"1.0.0",
+    "runtimeVersion": "1.0.0",
     "updates": {
       "url": "https://u.expo.dev/d4085e7d-b773-4a62-a445-35ed9e77ed3d"
     }
