@@ -1,50 +1,62 @@
-# Welcome to your Expo app 👋
+## Funzionalità dell'App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+### 1. Registrazione e Accesso
+- Creare un account personale con un nome utente e una password
+- Accedere al proprio account esistente
+- Disconnettersi dall'account in qualsiasi momento
 
-## Get started
+### 2. Gestione del Profilo Personale
+- Personalizzare il proprio profilo scegliendo una tra sei diverse icone
+- Modificare la password di accesso
 
-1. Install dependencies
+### 3. Creazione e Gestione delle Ricette
+- Creare nuove ricette inserendo:
+  - Titolo
+  - Ingredienti
+  - Quantità
+  - Tempo di cottura
+  - Preparazione
+  - Note
+  - Foto
+- Modificare una ricetta già esistente
+- Eliminare le ricette
 
-   ```bash
-   npm install
-   ```
+### 4. Ricerca
+- Visualizzare l'elenco completo di tutte le ricette create
+- Utilizzare una barra di ricerca per trovare ricette in base al loro nome o agli ingredienti in esse contenuti
+- Scoprire una "Ricetta del Giorno" selezionata automaticamente in modo casuale tra quelle disponibili
 
-2. Start the app
+### 5. Sistema di Valutazione e Preferiti
+- Assegnare un voto da 1 a 5 stelle a qualsiasi ricetta
+- Visualizzare la valutazione media di ogni ricetta
+- Contrassegnare le ricette preferite con un "like" per poterle ritrovare rapidamente
 
-   ```bash
-   npx expo start
-   ```
+### 6. Lista della Spesa
+- Aggiungere manualmente singoli ingredienti alla lista della spesa
+- Aggiungere automaticamente tutti gli ingredienti di una ricetta alla lista della spesa tramite la pagina dei "Prossimamente in Tavola"
+- Contrassegnare gli ingredienti come "acquistati" spuntandoli dalla lista
+- Visualizzare da quale ricetta proviene un determinato ingrediente in lista
+- Eliminare gli elementi dalla lista
 
-In the output, you'll find options to open the app in a
+### 7. Inventario del Frigo
+- Tenere traccia di tutti gli ingredienti presenti fisicamente nel proprio frigorifero, inserendone il nome e la quantità
+- Selezionare più ingredienti contemporaneamente dal proprio inventario
+- Attivare una ricerca automatica che trova tutte le ricette che è possibile preparare con gli ingredienti selezionati
+- Rimuovere gli ingredienti dall'elenco
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### 8. Creazione di Liste di Ricette
+- Creare liste personalizzate per organizzare le ricette
+- Selezionare e aggiungere più ricette a una lista in una sola volta
+- Visualizzare il contenuto di ogni lista, con il numero di ricette contenute
+- Accedere rapidamente alle ricette direttamente dalla lista
+- Eliminare le liste create
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### 9. Statistiche e Riepilogo
+Visualizzare le statistiche della propria attività sull'app, tra cui:
+- Il numero totale di ricette create
+- Il numero di ricette contrassegnate come preferite
+- Il numero di ingredienti attualmente nel frigo
+- Il numero di liste create
+- Il numero di elementi nella lista della spesa
+- La valutazione media data alle proprie ricette
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
