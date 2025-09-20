@@ -1,8 +1,50 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
-import { Image, Text, View } from 'react-native';
+import * as Updates from 'expo-updates';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, Image, Text, View } from 'react-native';
 
 const _Layout = () => {
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  useEffect(() => {
+    async function updateApp() {
+      try {
+        setIsUpdating(true);
+        
+        const update = await Updates.checkForUpdateAsync();
+        
+        if (update.isAvailable) {
+
+          await Updates.fetchUpdateAsync();
+          
+          await Updates.reloadAsync();
+        }
+      } catch (error) {
+        console.error('Errore durante l\'aggiornamento:', error);
+      } finally {
+        setIsUpdating(false);
+      }
+    }
+
+    updateApp();
+  }, []);
+
+  if (isUpdating) {
+    return (
+      <View style={{ 
+        flex: 1, 
+        justifyContent: 'center', 
+        alignItems: 'center',
+        backgroundColor: '#A7c957'
+      }}>
+        <ActivityIndicator size="large" color="#bc4749" />
+        <Text style={{ marginTop: 10, color: '#386641' }}>
+          Aggiornamento in corso...
+        </Text>
+      </View>
+    );
+  }
+
   return (
     <Tabs
       screenOptions={{

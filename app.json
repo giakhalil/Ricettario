@@ -19,7 +19,16 @@
     },
     "runtimeVersion": "1.0.0",
     "updates": {
-      "url": "https://u.expo.dev/d4085e7d-b773-4a62-a445-35ed9e77ed3d"
+      "url": "https://u.expo.dev/d4085e7d-b773-4a62-a445-35ed9e77ed3d",
+      "enabled": true,
+      "fallbackToCacheTimeout": 0,
+      "checkAutomatically": "ON_LOAD"
+    },
+    "plugins": [
+      "expo-updates"
+    ],
+    "android": {
+      "package": "com.giadak21.Ricettario"
     }
   }
 }

@@ -1,7 +1,7 @@
 import * as ImagePicker from 'expo-image-picker';
 import { useNavigation, useRouter } from "expo-router";
 import React, { useLayoutEffect, useState } from "react";
-import { ActivityIndicator, Alert, Button, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Alert, Button, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { saveRecipe } from "../../utils/recipeStorage";
 
@@ -138,6 +138,7 @@ const CreateRecipe = () => {
         ) : (
           <Button title="💾 Salva ricetta" onPress={handleSave} color="#4CAF50" />
         )}
+        <View style={styles.extraSpace} /> 
       </ScrollView>
     </SafeAreaView>
   );
@@ -195,6 +196,10 @@ const styles = StyleSheet.create({
   },
   loader: {
     marginVertical: 20
+  },
+
+   extraSpace: {
+    height: 100,
   }
 });
 

@@ -171,8 +171,10 @@ const EditRecipe = () => {
         placeholder="Inserisci note (opzionale)"
       />
 
-      <Button title="💾 Salva modifiche" onPress={handleSave} color="#2196F3" />
+      <Button title="💾 Salva modifiche" onPress={handleSave} color="#386641" />
+    <View style={styles.extraSpace} /> 
     </ScrollView>
+
   );
 };
 
@@ -224,6 +226,9 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  extraSpace: {
+    height: 100,
   }
 });
 

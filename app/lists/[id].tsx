@@ -57,7 +57,7 @@ const ListDetail = () => {
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>{list.name}</Text>
       <Text style={styles.subtitle}>
-        {recipes.length} ricetta{recipes.length !== 1 ? 'e' : ''} in questa lista
+        {recipes.length} ricett{recipes.length == 1 ? 'a' : 'e'} in questa lista
       </Text>
 
       <FlatList
