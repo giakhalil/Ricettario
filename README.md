@@ -35,6 +35,7 @@
 - Aggiungere manualmente singoli ingredienti alla lista della spesa
 - Aggiungere automaticamente tutti gli ingredienti di una ricetta alla lista della spesa tramite la pagina dei "Prossimamente in Tavola"
 - Contrassegnare gli ingredienti come "acquistati" spuntandoli dalla lista
+- Una volta inserito nel frigo l'ingrediente, questo scomparirà dalla lista della spesa. 
 - Visualizzare da quale ricetta proviene un determinato ingrediente in lista
 - Eliminare gli elementi dalla lista
 
