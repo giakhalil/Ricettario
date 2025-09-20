@@ -106,7 +106,7 @@ const Lists = () => {
             >
               <Text style={styles.listName}>{item.name}</Text>
               <Text style={styles.recipeCount}>
-                {item.recipeIds.length} ricetta{item.recipeIds.length !== 1 ? 'e' : ''}
+                {item.recipeIds.length} ricett{item.recipeIds.length == 1 ? 'a' : 'e'}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity 
